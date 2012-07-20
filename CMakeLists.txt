@@ -14,7 +14,7 @@
 
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
 
-PROJECT (zorba_image_module)
+PROJECT (zorba_graphviz_module)
 ENABLE_TESTING ()
 INCLUDE (CTest)
 
