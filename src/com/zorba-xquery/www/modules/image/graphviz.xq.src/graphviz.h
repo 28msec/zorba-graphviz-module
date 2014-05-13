@@ -17,9 +17,12 @@
 #ifndef ZORBA_GRAPHVIZMODULE_GRAPHVIZ_H
 #define ZORBA_GRAPHVIZMODULE_GRAPHVIZ_H
 
+// standard
 #include <map>
 
+// Zorba
 #include <zorba/iterator.h>
+#include <zorba/item_sequence.h>
 #include <zorba/zorba.h>
 #include <zorba/function.h>
 #include <zorba/external_module.h>
