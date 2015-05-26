@@ -33,7 +33,11 @@
 #endif
 
 #include <types.h>
-#include <graph.h>
+#ifdef GRAPHVIZ_USE_CGRAPH
+  #include <cgraph.h>
+#else
+  #include <graph.h>
+#endif
 #include <gvc.h>
 
 #include <zorba/diagnostic_list.h>
@@ -482,8 +486,11 @@ GxlFunction::LazyGxlSequence::InternalIterator::next(Item& aItem)
       lErrorMsg << "could not read from file " << lTmpFile.c_str();
       GraphvizFunction::throwErrorWithQName(theItemSequence->theFunc->theModule->getItemFactory(), "IM003", lErrorMsg.str());
     }
-
+#ifdef GRAPHVIZ_USE_CGRAPH
+    lGraph = agread(lFile, NULL);
+#else
     lGraph = agread(lFile);
+#endif    
     fclose(lFile);
 
     if (!lGraph) {
