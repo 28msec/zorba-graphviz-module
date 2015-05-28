@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+MESSAGE(STATUS "")
+MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+MESSAGE(STATUS "Configuring external module <graphviz>")
+MESSAGE(STATUS "-------------------------------------------------------------")
+MESSAGE(STATUS "")
+
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
 
 PROJECT (zorba_graphviz_module)
@@ -22,6 +28,40 @@ FIND_PACKAGE (Zorba REQUIRED HINTS "${ZORBA_BUILD_DIR}")
 INCLUDE ("${Zorba_USE_FILE}")
 
 SET_CMAKE_MODULE_PATH ()
-ADD_SUBDIRECTORY ("src")
+
+IF(ZORBA_SUPPRESS_GRAPHVIZ)
+  MESSAGE(STATUS "ZORBA_SUPPRESS_Graphviz is true - not searching for Graphviz.")
+  
+  MESSAGE(STATUS "")
+  MESSAGE(STATUS "-------------------------------------------------------------")  
+  MESSAGE(STATUS "Configuration FAILED for external module <graphviz>")
+  
+ELSE (ZORBA_SUPPRESS_GRAPHVIZ)
+  MESSAGE (STATUS "Looking for Graphviz")
+  FIND_PACKAGE(Graphviz)
+  
+  IF (GRAPHVIZ_FOUND)
+    MESSAGE(STATUS "Found Graphviz library -- "${GRAPHVIZ_LIBRARIES})
+     
+    INCLUDE_DIRECTORIES(${GRAPHVIZ_INCLUDE_DIRS})
+
+    ADD_SUBDIRECTORY ("src")    
+    ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test_graphviz")
+    
+    MESSAGE(STATUS "")
+    MESSAGE(STATUS "-------------------------------------------------------------")
+    MESSAGE(STATUS "Configuration SUCCEEDED for external module <graphviz>")
+    
+  ELSE (GRAPHVIZ_FOUND)
+    MESSAGE(STATUS "Graphviz library not found.")
+    
+    MESSAGE(STATUS "")
+    MESSAGE(STATUS "-------------------------------------------------------------")  
+    MESSAGE(STATUS "Configuration FAILED for external module <>")
+    
+  ENDIF (GRAPHVIZ_FOUND)
+ENDIF (ZORBA_SUPPRESS_GRAPHVIZ)
 
 DONE_DECLARING_ZORBA_URIS ()
+
+MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
