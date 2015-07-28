@@ -48,6 +48,14 @@ ELSE (ZORBA_SUPPRESS_GRAPHVIZ)
     ADD_SUBDIRECTORY ("src")    
     ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test_graphviz")
     
+    
+    IF (GRAPHVIZ_LEGACY)
+      MESSAGE(STATUS "Legacy version detected")
+    ELSE (GRAPHVIZ_LEGACY)
+      MESSAGE(STATUS "Current version detected")
+      ADD_DEFINITIONS(-DGRAPHVIZ_USE_CGRAPH)
+    ENDIF (GRAPHVIZ_LEGACY)
+    
     MESSAGE(STATUS "")
     MESSAGE(STATUS "-------------------------------------------------------------")
     MESSAGE(STATUS "Configuration SUCCEEDED for external module <graphviz>")
